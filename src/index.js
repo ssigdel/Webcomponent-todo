@@ -65,7 +65,7 @@ class TodoElement extends HTMLElement{
     handleClick(){
         const inputBox = this.shadowRoot.querySelector('input[type="text"]')
 
-        let div = this.shadowRoot.createElement('div')
+        let div = document.createElement('div')
 
         let todoList =  this.shadowRoot.querySelector('.todo-list')
 
