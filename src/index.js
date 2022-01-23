@@ -9,8 +9,9 @@ template.innerHTML = `
         align-items: center;
     }
   	 h1{
-        color: #333;
         text-align: center;
+        font-family: "Volkhov", serif;
+        color: #181e4b;
   	}
     input[type="text"]{
         padding: 5px;
@@ -25,13 +26,20 @@ template.innerHTML = `
     .todo-list{
         list-style: none;
     }
+    .list-item{
+        border-left: 5px solid blue;
+        padding: 10px;
+        margin: 15px 0;
+        font-family: "Poppins", sans-serif;
+        background: white;
+    }
   </style>
 
   <div class="my-todo">
   	<h1></h1>
       <input type="text" placeholder="Enter todo"/>
       <button class="add-btn">Add</button>
-      <ul class="todo-list"></ul>
+      <div class="todo-list"></div>
   </div>
 `;
 
@@ -57,13 +65,17 @@ class TodoElement extends HTMLElement{
     handleClick(){
         const inputBox = this.shadowRoot.querySelector('input[type="text"]')
 
-        let li = document.createElement('li')
+        let div = this.shadowRoot.createElement('div')
 
         let todoList =  this.shadowRoot.querySelector('.todo-list')
 
-        li.innerText = inputBox.value
+        div.innerText = inputBox.value
 
-        todoList.appendChild(li)
+        div.setAttribute('class', 'list-item')
+
+        todoList.appendChild(div)
+
+        inputBox.value = ''
     }
 
     //renders initial content
