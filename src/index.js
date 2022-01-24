@@ -1,8 +1,8 @@
+//This is the old component. New component has been created by breaking down the component
+
 //template for custom element
 const template = document.createElement('template');
-let id = 0;
 template.innerHTML = `
-
 	<style>
     :host{
         display: flex;
@@ -21,17 +21,27 @@ template.innerHTML = `
         font-size: 16px;
     }
     .add-btn{
-        padding: 5px;
+        padding: 10px;
         font-size: 16px;
+        color: white;
+        background-color: #0275d8;
+        border: none;
+        border-radius: 5px;
     }
     .list-item{
         display: flex;
         justify-content: space-between;
-        border-left: 5px solid blue;
+        border-left: 5px solid  #0275d8;
         padding: 10px;
         margin: 15px 0;
         font-family: "Poppins", sans-serif;
         background: white;
+    }
+    .delete-btn{
+        color: white;
+        background-color: #d9534f;
+        border: none;
+        border-radius: 5px;
     }
   </style>
 
@@ -54,7 +64,7 @@ class TodoElement extends HTMLElement{
 
         this.shadowRoot.querySelector('.add-btn').addEventListener('click', this.handleClick.bind(this))
 
-        this.listItems = ['first', 'second', 'third']
+        this.listItems = ['first']
 
 	}
 
@@ -69,19 +79,23 @@ class TodoElement extends HTMLElement{
 
         let deleteBtn = document.createElement('button')
 
+        let todoList =  this.shadowRoot.querySelector('.todo-list')
+
+        deleteBtn.setAttribute('class', 'delete-btn')
+
         deleteBtn.innerText = 'Delete'
 
         deleteBtn.addEventListener('click', (e) => {
-            console.log(e.target.id)
+          console.log(this)
         })
-
-        let todoList =  this.shadowRoot.querySelector('.todo-list')
 
         div.innerText = value
 
         div.setAttribute('class', 'list-item')
 
-        deleteBtn.setAttribute('id', id++)
+        div.setAttribute('id', value)
+
+        deleteBtn.setAttribute('id', this.listItems.length)
 
         div.appendChild(deleteBtn)
 
@@ -104,9 +118,12 @@ class TodoElement extends HTMLElement{
     render(){
         this.shadowRoot.querySelector('h1').innerText = this.getAttribute('text');
         
-        this.listItems.forEach((item) => {
-            this.createList(item)
-        })
+            if(this.listItems){
+                this.listItems.forEach((item) => {
+                    this.createList(item)
+                })
+            }
+      
     }
   
 }
